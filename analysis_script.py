@@ -1,7 +1,7 @@
 import time
 start_time=time.time()
 
-
+import os
 import numpy as np
 from dataset_class import Dataset
 from torch.utils.data import DataLoader, SubsetRandomSampler
@@ -16,6 +16,9 @@ dataset = Dataset(data_dir)
 
 batch_size = 4  # Specify the batch size
 threshold = 0.97   # Threshold for overlap - exit condition for training the model - in [0,1]
+get_projection_matr = False #If True, saves the projection matrix and singular values of each fit step to NumPy files
+
+
 
 print(data_dir, batch_size, threshold)
 
@@ -70,7 +73,11 @@ for batch in train_loader:
     if np.average(overlaps) >= threshold:
         print(i*batch_size, '/', train_size, 'batches used')
         print(np.average(overlaps))
-        break
+
+        if get_projection_matr == True:
+            os.makedirs(data_dir + '/p_matrix_svs/', exist_ok=True)
+            np.savez_compressed(data_dir + '/p_matrix_svs/' + str(i*batch_size), p_matrix=ipca.components_, svs=ipca.singular_values_)
+            break
 else:
     print(i*batch_size, '/', train_size, 'batches used')
 
