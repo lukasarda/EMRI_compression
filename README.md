@@ -1,6 +1,11 @@
 # EMRI_compression
 Various Compression and Analysis Codes for EMRIs
 
+Scripts for waveform generation, preprocessing of the data and analysis with the Incremental PCA method.
+
+DISCLAIMER:
+Many directory locations are hard-coded and need to be changed accordingly.
+
 
 To create a conda environment on the CC-in2p3 cluster applicable to the codes follow this manual:
 
