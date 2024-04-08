@@ -9,16 +9,25 @@ Quick guide how to perform the different analysis/compression methods.
 1. Modify "parameter.py" to select your EMRI parameter space. Different distributions are available.
    In the current state only mass is varied inbetween parameter sets.
 2. Generate data either in time domain "generate_wf_td.py" or frequency domain "generate_wf_fd.py".
-   Inside the file four main variables should be specified. If GPUs should be used for generation "use_gpu",
-   the number of samples to generate "no_of_waveforms" and the saving frequency i.e. the number of samples per file
-   "save_freq".
+   Inside the file four main variables should be specified.
+         "use_gpu" to enable GPU usage for waveform generation
+         "no_of_waveforms" for the number of samples to generate
+         "save_freq" i.e. number of waveforms/samples per file
+         "output_dir" directory where waveforms are saved
+
+---Pre-process data---
+1. In the "npz_to_pt.py" file modify the "data_dir" and "data_key"
+2. Run the file.
 
 
 ---Incremental PCA---
+1. In the "analysis_script.py" file choose between GPU ("cuml") and CPU ("sklearn") usage by commenting the other.
+2. Set "dir_name" and "data_dir" accordingly to the directory where the samples are saved.
+3. Set "batch_size" according to your computational resources
+4. Set "threshold" to be the overlap where the training should be exited.
+5. If the projection matrix should be saved set "get_projection_matr"
 
-1. 
-
-
+ 
 
 DISCLAIMER:
 Many directory locations are hard-coded and need to be changed accordingly.
