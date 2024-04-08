@@ -15,6 +15,7 @@ Quick guide how to perform the different analysis/compression methods.
 
 
 ---Incremental PCA---
+
 1. 
 
 
