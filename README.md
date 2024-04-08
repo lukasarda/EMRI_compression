@@ -3,10 +3,37 @@ Various Compression and Analysis Codes for EMRIs
 
 Scripts for waveform generation, preprocessing of the data and analysis with the Incremental PCA method.
 
+# Quick Guide
+Quick guide how to perform the different analysis/compression methods.
+
+---Generate Data---
+1. Modify "parameter.py" to select your EMRI parameter space. Different distributions are available.
+   In the current state only mass is varied inbetween parameter sets.
+2. Generate data either in time domain "generate_wf_td.py" or frequency domain "generate_wf_fd.py".
+   Inside the file four main variables should be specified.
+         "use_gpu" to enable GPU usage for waveform generation
+         "no_of_waveforms" for the number of samples to generate
+         "save_freq" i.e. number of waveforms/samples per file
+         "output_dir" directory where waveforms are saved
+
+---Pre-process data---
+1. In the "npz_to_pt.py" file modify the "data_dir" and "data_key"
+2. Run the file.
+
+
+---Incremental PCA---
+1. In the "analysis_script.py" file choose between GPU ("cuml") and CPU ("sklearn") usage by commenting the other.
+2. Set "dir_name" and "data_dir" accordingly to the directory where the samples are saved.
+3. Set "batch_size" according to your computational resources
+4. Set "threshold" to be the overlap where the training should be exited.
+5. If the projection matrix should be saved set "get_projection_matr"
+
+ 
+
 DISCLAIMER:
 Many directory locations are hard-coded and need to be changed accordingly.
 
-
+# Installation manual
 To create a conda environment on the CC-in2p3 cluster applicable to the codes follow this manual:
 
 1. Go to an interactive gpu mode: srun -p gpu_interactive --gres=gpu:v100:1 -t 0-09:00 -n 4 --mem 40G --pty bash -i
