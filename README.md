@@ -5,6 +5,7 @@ Scripts for waveform generation, preprocessing of the data and analysis with the
 
 # Quick Guide
 Quick guide how to perform the different analysis/compression methods.
+
 ---Generate Data---
 1. Modify "parameter.py" to select your EMRI parameter space. Different distributions are available.
    In the current state only mass is varied inbetween parameter sets.
