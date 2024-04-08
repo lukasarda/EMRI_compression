@@ -2,16 +2,16 @@
 
 # SLURM options:
 
-#SBATCH --job-name=EMRI_test    # Job name
+#SBATCH --job-name=5020_10_2    # Job name
 #SBATCH --output=serial_test_%j.log   # Standard output and error log
 #SBATCH --error=serial_test_error_%j.log
 
 
 #SBATCH --partition=htc               # Partition choice (htc by default)
 
-#SBATCH --ntasks=1                    # Run a single task
+#SBATCH --ntasks=4                    # Run a single task
 #SBATCH --mem=30000                    # Memory in MB per default
-#SBATCH --time=1-00:00:00             # Max time limit = 7 days
+#SBATCH --time=2-00:00:00             # Max time limit = 7 days
 
 #SBATCH --mail-user=None   # Where to send mail
 #SBATCH --mail-type=BEGIN,END,FAIL          # Mail events (NONE, BEGIN, END, FAIL, ALL)
@@ -31,6 +31,7 @@ conda activate few_pytorch
 
 #python main.py
 
-python inc_PCA.py
+python analysis_script.py
+#python cuml_inc_PCA.py
 
 #python npz_to_pt.py

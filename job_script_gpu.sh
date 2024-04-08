@@ -2,7 +2,7 @@
 
 # SLURM options:
 
-#SBATCH --job-name=30000    # Job name
+#SBATCH --job-name=5020_10    # Job name
 #SBATCH --output=serial_test_%j.log   # Standard output and error log
 #SBATCH --error=serial_test_error_%j.log
 
@@ -29,7 +29,7 @@ conda init
 conda activate few_pytorch
 
 #python generate_wf_td.py
-#python generate_wf_td.py
+#python generate_wf_fd.py
 
 #python main.py
 
