@@ -1,5 +1,8 @@
 import torch
 import os
+import numpy as np
+
+from torch.utils.data import Dataset, ConcatDataset
 
 
 class Dataset:
@@ -28,3 +31,23 @@ class Dataset:
             current_index += samples_count
         raise IndexError("Index out of range")
 
+
+class npz_dataset(Dataset):
+
+    def __init__(self, filepath, key):
+        self.filepath = filepath
+        self.key = key
+
+
+    def __getitem__(self, index):
+        #matrix = np.load(self.filepath)[self.key]
+        matrix_mmap = np.load(self.filepath, mmap_mode='r')
+        element = matrix_mmap[self.key][index]
+        matrix_mmap.close()
+        return element #matrix[index]
+    
+    def __len__(self):
+        matrix_mmap = np.load(self.filepath, mmap_mode='r')
+        length = matrix_mmap[self.key].shape[0]
+        matrix_mmap.close()
+        return length

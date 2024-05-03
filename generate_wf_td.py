@@ -38,9 +38,9 @@ few = FastSchwarzschildEccentricFlux(
     use_gpu=use_gpu,
 )
 
-no_of_waveforms = 3e4
+no_of_waveforms = 3
 
-save_freq = 100
+save_freq = 1
 
 params = para_con(int(no_of_waveforms))
 

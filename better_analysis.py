@@ -2,39 +2,49 @@ import time
 start_time=time.time()
 
 import os
-import numpy as np
+import glob
 import torch
-from dataset_class import Dataset
-from torch.utils.data import DataLoader, SubsetRandomSampler
-from sklearn.decomposition import IncrementalPCA
-#from cuml.decomposition import IncrementalPCA
+import numpy as np
+
+from torch.utils.data import ConcatDataset, DataLoader, SubsetRandomSampler
+from dataset_class import npz_dataset
+#from sklearn.decomposition import IncrementalPCA
+from cuml.decomposition import IncrementalPCA
+
+from helpers import traf_inv_traf, conca
+
+
+folder = '30000_samples'
+dir_path = '/sps/lisaf/lkarda/H_matrices_fd/'+folder+'/'
+key = 'hf'
+
+filepaths = glob.glob(os.path.join(dir_path, '*.npz'))
+datasets = [npz_dataset(filepath=filepath, key=key) for filepath in filepaths]
+big_set = ConcatDataset(datasets)
 
 
 
-from helpers import traf_inv_traf
 
 if __name__ == '__main__':
     torch.multiprocessing.set_start_method('spawn')
 
-    dir_name= '5020_samples'
-    data_dir = '/sps/lisaf/lkarda/H_matrices_fd/'+dir_name+'/tensor_files'
-    dataset = Dataset(data_dir)
 
-    batch_size = 10  # Specify the batch size
+    batch_size = 20  # Specify the batch size
     threshold = 0.97   # Threshold for overlap - exit condition for training the model - in [0,1]
     get_projection_matr = False #If True, saves the projection matrix and singular values of each fit step to NumPy files
 
+    num_workers = 4
 
-    print('Dataset:', dir_name)
+    print('Dataset:', dir_path)
     print('Batch size:', batch_size)
     print('Threshold:', threshold)
 
     # Define the size of the training and testing sets
-    train_size = int(0.8 * len(dataset))  # 80% of the data for training
-    test_size = len(dataset) - train_size  # Remaining 20% for testing
+    train_size = int(0.8 * len(big_set))  # 80% of the data for training
+    test_size = len(big_set) - train_size  # Remaining 20% for testing
 
     # Define indices for the training and testing sets
-    indices = list(range(len(dataset)))
+    indices = list(range(len(big_set)))
     train_indices = indices[:train_size]
     test_indices = indices[train_size:]
 
@@ -43,8 +53,8 @@ if __name__ == '__main__':
     test_sampler = SubsetRandomSampler(test_indices)
 
     # Create data loaders for training and testing sets
-    train_loader = DataLoader(dataset, batch_size=batch_size, sampler=train_sampler, num_workers=4, pin_memory=True)
-    test_loader = DataLoader(dataset, batch_size=batch_size, sampler=test_sampler, num_workers=4, pin_memory=True)
+    train_loader = DataLoader(big_set, batch_size=batch_size, sampler=train_sampler, num_workers=num_workers, pin_memory=True)
+    test_loader = DataLoader(big_set, batch_size=batch_size, sampler=test_sampler, num_workers=num_workers, pin_memory=True)
 
 
     ipca = IncrementalPCA(n_components=batch_size)
@@ -55,18 +65,21 @@ if __name__ == '__main__':
 
     for i, train_batch in enumerate(train_loader):
 
+
+        matrix = np.stack([conca(item).ravel() for item in train_batch], axis=0)
         # Train model
-        ipca.partial_fit(train_batch.numpy())
+        ipca.partial_fit(matrix)
         
         if i % 10 ==0:
             overlaps = []
             for test_batch in test_loader:
 
+                matrix = np.stack([conca(item).ravel() for item in test_batch], axis=0)
                 # Test model
-                overlaps.append(np.average(traf_inv_traf(ipca, test_batch.numpy())))
+                overlaps.append(np.average(traf_inv_traf(ipca, matrix)))
 
             print(f"Batch {i+1}/{len(train_loader)}: Average overlap = {overlaps[-1]}")
-            np.savez_compressed('/sps/lisaf/lkarda/overlaps/'+str(len(dataset))+'_'+str(batch_size)+'.npz', overlaps=overlaps)
+            np.savez_compressed('/sps/lisaf/lkarda/overlaps/'+str(len(big_set))+'_'+str(batch_size)+'.npz', overlaps=overlaps)
 
             
             if overlaps[-1] >= threshold:
@@ -74,8 +87,8 @@ if __name__ == '__main__':
                 print(overlaps[-1])
 
             if get_projection_matr == True:
-                os.makedirs(data_dir + '/p_matrix_svs/', exist_ok=True)
-                np.savez_compressed(data_dir + '/p_matrix_svs/' + str(i*batch_size), p_matrix=ipca.components_, svs=ipca.singular_values_)
+                os.makedirs(dir_path + '/p_matrix_svs/', exist_ok=True)
+                np.savez_compressed(dir_path + '/p_matrix_svs/' + str(i*batch_size), p_matrix=ipca.components_, svs=ipca.singular_values_)
                 break
     else:
         print(i+1, '/', len(train_loader), 'training batches used')

@@ -2,7 +2,7 @@
 
 # SLURM options:
 
-#SBATCH --job-name=5020_10    # Job name
+#SBATCH --job-name=save_net    # Job name
 #SBATCH --output=serial_test_%j.log   # Standard output and error log
 #SBATCH --error=serial_test_error_%j.log
 
@@ -11,12 +11,10 @@
 
 #SBATCH --ntasks=4                    # Run a single task
 #SBATCH --mem=30000                    # Memory in MB per default
-#SBATCH --time=1-00:00:00             # Max time limit = 7 days
+#SBATCH --time=2-00:00:00             # Max time limit = 7 days
 #SBATCH --gres=gpu:v100:1              #specific request of a GPU type
 
 
-#SBATCH --mail-user=None   # Where to send mail
-#SBATCH --mail-type=BEGIN,END,FAIL          # Mail events (NONE, BEGIN, END, FAIL, ALL)
 
 #SBATCH --licenses=sps                # Declaration of storage and/or software resources
 
@@ -28,12 +26,5 @@ conda init
 
 conda activate few_pytorch
 
-#python generate_wf_td.py
-#python generate_wf_fd.py
+python ./neural_nets/auto_enc_main.py
 
-#python main.py
-
-python analysis_script.py
-#python cuml_inc_PCA.py
-
-#python npz_to_pt.py
