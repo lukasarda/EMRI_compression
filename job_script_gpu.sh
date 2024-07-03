@@ -2,7 +2,7 @@
 
 # SLURM options:
 
-#SBATCH --job-name=save_net    # Job name
+#SBATCH --job-name=AE_CNN_maxPool2    # Job name
 #SBATCH --output=serial_test_%j.log   # Standard output and error log
 #SBATCH --error=serial_test_error_%j.log
 
@@ -10,8 +10,8 @@
 
 
 #SBATCH --ntasks=4                    # Run a single task
-#SBATCH --mem=30000                    # Memory in MB per default
-#SBATCH --time=2-00:00:00             # Max time limit = 7 days
+#SBATCH --mem=40000                    # Memory in MB per default
+#SBATCH --time=7-00:00:00             # Max time limit = 7 days
 #SBATCH --gres=gpu:v100:1              #specific request of a GPU type
 
 
@@ -26,5 +26,9 @@ conda init
 
 conda activate few_pytorch
 
-python ./neural_nets/auto_enc_main.py
+# python /pbs/home/l/lkarda/EMRI_compression/neural_nets/wavelet_trafo.py
+python /pbs/home/l/lkarda/EMRI_compression/neural_nets/variable_net_auto_enc_main.py
 
+# python /pbs/home/l/lkarda/EMRI_compression/generate_wf_td.py
+
+# python /pbs/home/l/lkarda/EMRI_compression/PCA/ipca_main.py

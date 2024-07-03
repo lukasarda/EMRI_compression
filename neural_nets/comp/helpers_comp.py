@@ -13,7 +13,7 @@ from num_features import cn_enc_out_shape
 
 def load_model(module_path, model_class_name, model_state_name, channel_mult, num_fc_nodes_bottleneck, input_shape):
     h_cn_enc_out, w_cn_enc_out, h_kernel, w_kernel = cn_enc_out_shape(channel_mult= channel_mult, input_shape= input_shape)
-    num_fc_nodes_after_conv= 1 * h_cn_enc_out * w_cn_enc_out
+    num_fc_nodes_after_conv= 100 * h_cn_enc_out * w_cn_enc_out
 
     spec = importlib.util.spec_from_file_location("neural_net_module", module_path)
     neural_net_module = importlib.util.module_from_spec(spec)
@@ -28,7 +28,7 @@ def load_model(module_path, model_class_name, model_state_name, channel_mult, nu
     )
     
     # Construct the full path to the model state
-    model_state_path = '/pbs/home/l/lkarda/EMRI_compression/neural_nets/model_states/' + model_state_name
+    model_state_path = '/sps/lisaf/lkarda/model_states/res_states/' + model_state_name
     
     model.load_state_dict(torch.load(model_state_path, map_location=torch.device('cuda')))
     model.eval()

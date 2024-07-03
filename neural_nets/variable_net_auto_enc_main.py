@@ -3,7 +3,7 @@ from torch.utils.data import DataLoader
 from datetime import datetime
 
 from dataset_class_nn import npz_class
-from neural_net_class import AE_net
+from neural_net_class import AE_net, CL_maxPool, AE_CNN_maxPool2
 from trainer_class import Trainer
 from num_features import cn_enc_out_shape
 
@@ -11,14 +11,14 @@ def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     torch.cuda.empty_cache()
 
-    folder = '30000_samples'
+    folder = '30000_samples_1_months'
     dir_path = '/sps/lisaf/lkarda/H_matrices_td/' + folder + '/tfm_singles/'
     vali_path = dir_path + 'tfm_singles_validation'
     dataset = npz_class(dirpath=dir_path)
     vali_set = npz_class(dirpath=vali_path)
 
     epochs = 100
-    batch_size = 50
+    batch_size = 100
     num_workers = 4
     channel_mult = 8
     
@@ -26,14 +26,14 @@ def main():
     h_cn_enc_out, w_cn_enc_out, h_kernel, w_kernel = cn_enc_out_shape(channel_mult= channel_mult, input_shape= dataset[0][0].shape)
 
     num_fc_nodes_after_conv= batch_size * h_cn_enc_out * w_cn_enc_out
-    num_fc_nodes_bottleneck= 1000
+    num_fc_nodes_bottleneck= 5000
 
-    auto_enc = AE_net(
-        channel_mult= channel_mult,
-        h_kernel= h_kernel,
-        w_kernel= w_kernel,
-        num_fc_nodes_after_conv= num_fc_nodes_after_conv,
-        num_fc_nodes_bottleneck= num_fc_nodes_bottleneck
+    auto_enc = AE_CNN_maxPool2(
+        # channel_mult= channel_mult,
+        # h_kernel= h_kernel,
+        # w_kernel= w_kernel,
+        # num_fc_nodes_after_conv= num_fc_nodes_after_conv,
+        # num_fc_nodes_bottleneck= num_fc_nodes_bottleneck
     ).to(device)
     loss_function = torch.nn.MSELoss()
     optimizer = torch.optim.Adam(auto_enc.parameters(), lr=1.e-3, weight_decay=1.e-5)

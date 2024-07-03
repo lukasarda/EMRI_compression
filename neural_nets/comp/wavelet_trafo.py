@@ -20,10 +20,11 @@ def read_global_extremes(file_path):
     
     return global_min, global_max
 
-def load_file(file, key='key'):
+def load_file(file):
     """Load the signal from file and p"""
     sample_id = os.path.splitext(os.path.basename(file))[0]
-    signal = np.load(file)[key]
+    signal = np.load(file)
+    signal = signal[signal.files[0]][0]
     return sample_id, signal
 
 def normalization(arr, arr_min, arr_max, up=1, low=0):

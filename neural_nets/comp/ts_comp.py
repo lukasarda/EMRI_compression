@@ -37,53 +37,53 @@ def main(model_class_name, model_state_name, input_file, output_plot, plot_flag)
     output_signal = inv_wavelet_transform(output_data_np, global_min, global_max, cfgs=cfgs, dt=10., fs=1./10., window='meyer', res_factor=1.)
 
 
-    # if plot_flag == 'tfm':
-    #     # Plot input and output
-    #     fig, axs = plt.subplots(2, 2, figsize=(12, 8))
-    #     extents = [0.0, 3164160.0, 9.765625e-05, 0.05]  # Modify as needed
+    if plot_flag == 'tfm':
+        # Plot input and output
+        fig, axs = plt.subplots(2, 2, figsize=(12, 8))
+        extents = [0.0, 3164160.0, 9.765625e-05, 0.05]  # Modify as needed
 
 
-    #     plot_colormap(input_data_np[0], extents, axs[0, 0], 'Real Input')
-    #     plot_colormap(input_data_np[1], extents, axs[0, 1], 'Imaginary Input')
-    #     plot_colormap(output_data_np[0], extents, axs[1, 0], 'Real Output')
-    #     plot_colormap(output_data_np[1], extents, axs[1, 1], 'Imaginary Output')
+        plot_colormap(input_data_np[0], extents, axs[0, 0], 'Real Input')
+        plot_colormap(input_data_np[1], extents, axs[0, 1], 'Imaginary Input')
+        plot_colormap(output_data_np[0], extents, axs[1, 0], 'Real Output')
+        plot_colormap(output_data_np[1], extents, axs[1, 1], 'Imaginary Output')
         
-    #     real_overlap=mat_overlap(input_data_np[0], output_data_np[0])
-    #     imag_overlap=mat_overlap(input_data_np[1], output_data_np[1])
+        real_overlap=mat_overlap(input_data_np[0], output_data_np[0])
+        imag_overlap=mat_overlap(input_data_np[1], output_data_np[1])
 
-    #     plt.tight_layout()
-    #     fig.suptitle('Overlaps: Real: {}, Imaginary: {}'.format(real_overlap, imag_overlap))
-    #     fig.tight_layout(rect=[0, 0.03, 1, 0.99])
-    #     plt.savefig(output_plot_path)
-    #     plt.close()
+        plt.tight_layout()
+        fig.suptitle('Overlaps: Real: {}, Imaginary: {}'.format(real_overlap, imag_overlap))
+        fig.tight_layout(rect=[0, 0.03, 1, 0.99])
+        plt.savefig(output_plot_path)
+        plt.close()
 
-    # if plot_flag == 'ts':
-    #     # Plot input and output
-    #     fig, axs = plt.subplots(2, 2, figsize=(12, 8))
-    #     dt = 10. #s
+    if plot_flag == 'ts':
+        # Plot input and output
+        fig, axs = plt.subplots(2, 2, figsize=(12, 8))
+        dt = 10. #s
 
-    #     plot_graph(input_signal.real[0:1000], dt, axs[0, 0], 'Real Input')
-    #     plot_graph(input_signal.imag[0:1000], dt, axs[0, 1], 'Imaginary Input')
-    #     plot_graph(output_signal[0].data[0:1000], dt, axs[1, 0], 'Real Output')
-    #     plot_graph(output_signal[1].data[0:1000], dt, axs[1, 1], 'Imaginary Output')
+        plot_graph(input_signal.real[0:1000], dt, axs[0, 0], 'Real Input')
+        plot_graph(input_signal.imag[0:1000], dt, axs[0, 1], 'Imaginary Input')
+        plot_graph(output_signal[0].data[0:1000], dt, axs[1, 0], 'Real Output')
+        plot_graph(output_signal[1].data[0:1000], dt, axs[1, 1], 'Imaginary Output')
         
-    #     real_overlap=mat_overlap(input_signal.real, output_signal[0].data)
-    #     imag_overlap=mat_overlap(input_signal.imag, output_signal[1].data)
+        real_overlap=mat_overlap(input_signal.real, output_signal[0].data)
+        imag_overlap=mat_overlap(input_signal.imag, output_signal[1].data)
 
-    #     plt.tight_layout()
-    #     fig.suptitle('Overlaps: Real: {}, Imaginary: {}'.format(real_overlap, imag_overlap))
-    #     fig.tight_layout(rect=[0, 0.03, 1, 0.99])
-    #     plt.savefig(output_plot_path)
-    #     plt.close()
+        plt.tight_layout()
+        fig.suptitle('Overlaps: Real: {}, Imaginary: {}'.format(real_overlap, imag_overlap))
+        fig.tight_layout(rect=[0, 0.03, 1, 0.99])
+        plt.savefig(output_plot_path)
+        plt.close()
 
 
 
 if __name__ == "__main__":
     
     model_class_name = 'AE_net'
-    model_state_name = 'AE_CNN_maxPool2_20240617_132507_79'
-    input_file = '5020_samples/singles/35_19_sample.npz'
-    output_plot = 'tfm_bigdataset_80epochs.png'
+    model_state_name = 'AE_net_30000_samples_1_months_8_1000_20240627_020501_27'
+    input_file = '100_samples_1_months/singles/18.npz'
+    output_plot = 'tfm_1_months_28epochs.png'
     plot_flag = 'tfm' # 'tfm' or 'ts'
 
     main(model_class_name, model_state_name, input_file, output_plot, plot_flag)

@@ -1,0 +1,46 @@
+Traceback (most recent call last):
+  File "/pbs/home/l/lkarda/EMRI_compression/neural_nets/variable_net_auto_enc_main.py", line 74, in <module>
+    main()
+  File "/pbs/home/l/lkarda/EMRI_compression/neural_nets/variable_net_auto_enc_main.py", line 66, in main
+    trainer.train_one_epoch(epoch)
+  File "/pbs/home/l/lkarda/EMRI_compression/neural_nets/trainer_class.py", line 20, in train_one_epoch
+    for i, batch in enumerate(self.train_loader):
+  File "/sps/lisaf/lkarda/miniconda3/envs/few_pytorch/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 630, in __next__
+    data = self._next_data()
+  File "/sps/lisaf/lkarda/miniconda3/envs/few_pytorch/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 1325, in _next_data
+    return self._process_data(data)
+  File "/sps/lisaf/lkarda/miniconda3/envs/few_pytorch/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 1371, in _process_data
+    data.reraise()
+  File "/sps/lisaf/lkarda/miniconda3/envs/few_pytorch/lib/python3.10/site-packages/torch/_utils.py", line 694, in reraise
+    raise exception
+zipfile.BadZipFile: Caught BadZipFile in DataLoader worker process 2.
+Original Traceback (most recent call last):
+  File "/sps/lisaf/lkarda/miniconda3/envs/few_pytorch/lib/python3.10/zipfile.py", line 1334, in _RealGetContents
+    endrec = _EndRecData(fp)
+  File "/sps/lisaf/lkarda/miniconda3/envs/few_pytorch/lib/python3.10/zipfile.py", line 276, in _EndRecData
+    data = fpin.read()
+OSError: [Errno 116] Stale file handle
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/sps/lisaf/lkarda/miniconda3/envs/few_pytorch/lib/python3.10/site-packages/torch/utils/data/_utils/worker.py", line 308, in _worker_loop
+    data = fetcher.fetch(index)
+  File "/sps/lisaf/lkarda/miniconda3/envs/few_pytorch/lib/python3.10/site-packages/torch/utils/data/_utils/fetch.py", line 51, in fetch
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "/sps/lisaf/lkarda/miniconda3/envs/few_pytorch/lib/python3.10/site-packages/torch/utils/data/_utils/fetch.py", line 51, in <listcomp>
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "/pbs/home/l/lkarda/EMRI_compression/neural_nets/dataset_class_nn.py", line 19, in __getitem__
+    with np.load(filepath) as tfm:
+  File "/sps/lisaf/lkarda/miniconda3/envs/few_pytorch/lib/python3.10/site-packages/numpy/lib/npyio.py", line 420, in load
+    ret = NpzFile(fid, own_fid=own_fid, allow_pickle=allow_pickle,
+  File "/sps/lisaf/lkarda/miniconda3/envs/few_pytorch/lib/python3.10/site-packages/numpy/lib/npyio.py", line 187, in __init__
+    _zip = zipfile_factory(fid)
+  File "/sps/lisaf/lkarda/miniconda3/envs/few_pytorch/lib/python3.10/site-packages/numpy/lib/npyio.py", line 103, in zipfile_factory
+    return zipfile.ZipFile(file, *args, **kwargs)
+  File "/sps/lisaf/lkarda/miniconda3/envs/few_pytorch/lib/python3.10/zipfile.py", line 1271, in __init__
+    self._RealGetContents()
+  File "/sps/lisaf/lkarda/miniconda3/envs/few_pytorch/lib/python3.10/zipfile.py", line 1336, in _RealGetContents
+    raise BadZipFile("File is not a zip file")
+zipfile.BadZipFile: File is not a zip file
+
