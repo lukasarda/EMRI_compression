@@ -88,7 +88,7 @@ def inverse_normalization(normed_arr, arr_min, arr_max, up=1, low=0):
     inv_arr = (normed_arr - beta) / alpha
     return np.clip(inv_arr, arr_min, arr_max)
 
-def inv_wavelet_transform(output, global_min, global_max, cfgs, dt=10., fs=1./10., window='meyer', res_factor=1.):
+def inv_wavelet_transform(output, global_min, global_max, cfgs=None, dt=10., fs=1./10., window='meyer', res_factor=1.):
     """Perform inverse normalization and inverse wavelet transform."""
     tfm_real = inverse_normalization(output[0], arr_min=global_min, arr_max=global_max)
     tfm_imag = inverse_normalization(output[1], arr_min=global_min, arr_max=global_max)

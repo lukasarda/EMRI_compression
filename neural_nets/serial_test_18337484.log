@@ -1,0 +1,21 @@
+no change     /sps/lisaf/lkarda/miniconda3/condabin/conda
+no change     /sps/lisaf/lkarda/miniconda3/bin/conda
+no change     /sps/lisaf/lkarda/miniconda3/bin/conda-env
+no change     /sps/lisaf/lkarda/miniconda3/bin/activate
+no change     /sps/lisaf/lkarda/miniconda3/bin/deactivate
+no change     /sps/lisaf/lkarda/miniconda3/etc/profile.d/conda.sh
+no change     /sps/lisaf/lkarda/miniconda3/etc/fish/conf.d/conda.fish
+no change     /sps/lisaf/lkarda/miniconda3/shell/condabin/Conda.psm1
+no change     /sps/lisaf/lkarda/miniconda3/shell/condabin/conda-hook.ps1
+no change     /sps/lisaf/lkarda/miniconda3/lib/python3.12/site-packages/xontrib/conda.xsh
+no change     /sps/lisaf/lkarda/miniconda3/etc/profile.d/conda.csh
+no change     /pbs/home/l/lkarda/.bashrc
+No action taken.
+AE_CNN_maxPool3_3
+# of epochs: 50
+# of samples: 24000
+Batchsize: 50
+# of batches: 480
+# of nodes in bottleneck 5000
+20240710_230355
+Epoch 1:

@@ -3,7 +3,7 @@ from torch.utils.data import DataLoader
 from datetime import datetime
 
 from dataset_class_nn import npz_class
-from neural_net_class import AE_net, CL_maxPool, AE_CNN_maxPool2
+from neural_net_class import AE_net, CL_maxPool, AE_CNN_maxPool3_5
 from trainer_class import Trainer
 from num_features import cn_enc_out_shape
 
@@ -17,19 +17,19 @@ def main():
     dataset = npz_class(dirpath=dir_path)
     vali_set = npz_class(dirpath=vali_path)
 
-    epochs = 100
-    batch_size = 100
+    epochs = 50
+    batch_size = 50
     num_workers = 4
     channel_mult = 8
     
 
-    h_cn_enc_out, w_cn_enc_out, h_kernel, w_kernel = cn_enc_out_shape(channel_mult= channel_mult, input_shape= dataset[0][0].shape)
+    # h_cn_enc_out, w_cn_enc_out, h_kernel, w_kernel = cn_enc_out_shape(channel_mult= channel_mult, input_shape= dataset[0][0].shape)
 
-    num_fc_nodes_after_conv= batch_size * h_cn_enc_out * w_cn_enc_out
+    # num_fc_nodes_after_conv= batch_size * h_cn_enc_out * w_cn_enc_out
     num_fc_nodes_bottleneck= 5000
 
-    auto_enc = AE_CNN_maxPool2(
-        # channel_mult= channel_mult,
+    auto_enc = AE_CNN_maxPool3_5(
+        channel_mult= channel_mult,
         # h_kernel= h_kernel,
         # w_kernel= w_kernel,
         # num_fc_nodes_after_conv= num_fc_nodes_after_conv,

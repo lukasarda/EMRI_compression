@@ -2,7 +2,7 @@
 
 # SLURM options:
 
-#SBATCH --job-name=AE_CNN_maxPool2    # Job name
+#SBATCH --job-name=3_3    # Job name
 #SBATCH --output=serial_test_%j.log   # Standard output and error log
 #SBATCH --error=serial_test_error_%j.log
 
@@ -28,6 +28,7 @@ conda activate few_pytorch
 
 # python /pbs/home/l/lkarda/EMRI_compression/neural_nets/wavelet_trafo.py
 python /pbs/home/l/lkarda/EMRI_compression/neural_nets/variable_net_auto_enc_main.py
+# python /pbs/home/l/lkarda/EMRI_compression/neural_nets/auto_enc_main.py
 
 # python /pbs/home/l/lkarda/EMRI_compression/generate_wf_td.py
 

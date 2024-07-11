@@ -1,0 +1,26 @@
+Traceback (most recent call last):
+  File "/pbs/home/l/lkarda/EMRI_compression/neural_nets/variable_net_auto_enc_main.py", line 74, in <module>
+    main()
+  File "/pbs/home/l/lkarda/EMRI_compression/neural_nets/variable_net_auto_enc_main.py", line 66, in main
+    trainer.train_one_epoch(epoch)
+  File "/pbs/home/l/lkarda/EMRI_compression/neural_nets/trainer_class.py", line 23, in train_one_epoch
+    output = self.model(batch)
+  File "/sps/lisaf/lkarda/miniconda3/envs/few_pytorch/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/sps/lisaf/lkarda/miniconda3/envs/few_pytorch/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/pbs/home/l/lkarda/EMRI_compression/neural_nets/neural_net_class.py", line 341, in forward
+    x = self.decoder(x)
+  File "/sps/lisaf/lkarda/miniconda3/envs/few_pytorch/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/sps/lisaf/lkarda/miniconda3/envs/few_pytorch/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/sps/lisaf/lkarda/miniconda3/envs/few_pytorch/lib/python3.10/site-packages/torch/nn/modules/container.py", line 215, in forward
+    input = module(input)
+  File "/sps/lisaf/lkarda/miniconda3/envs/few_pytorch/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/sps/lisaf/lkarda/miniconda3/envs/few_pytorch/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/sps/lisaf/lkarda/miniconda3/envs/few_pytorch/lib/python3.10/site-packages/torch/nn/modules/conv.py", line 952, in forward
+    return F.conv_transpose2d(
+RuntimeError: Given transposed=1, weight of size [8, 2, 6, 6], expected input[50, 2, 254, 256] to have 8 channels, but got 2 channels instead

@@ -27,7 +27,7 @@ def load_model(module_path, model_class_name, model_state_name, channel_mult, nu
         num_fc_nodes_bottleneck=num_fc_nodes_bottleneck
     )
     
-    model_state_path = os.path.join('/sps/lisaf/lkarda/model_states', model_state_name)
+    model_state_path = os.path.join('/sps/lisaf/lkarda/model_states/res_states', model_state_name)
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     model.load_state_dict(torch.load(model_state_path, map_location=device))
     model.to(device)
@@ -67,7 +67,7 @@ def main(module_path, model_class_name, model_state_name, input_folder, plot_fla
         model_class_name=model_class_name,
         model_state_name=model_state_name,
         channel_mult=channel_mult,
-        num_fc_nodes_bottleneck=1000,
+        num_fc_nodes_bottleneck=5000,
         input_shape=input_tensor_tfm.shape[2:]
     )
 
@@ -103,13 +103,13 @@ def main(module_path, model_class_name, model_state_name, input_folder, plot_fla
         plt.tight_layout()
         fig.suptitle('Overlaps: Real: {}, Imaginary: {}'.format(real_overlap, imag_overlap))
         fig.tight_layout(rect=[0, 0.03, 1, 0.99])
-        plt.savefig('/pbs/home/l/lkarda/EMRI_compression/plots/new_AE_arch_1_months.png')
+        plt.savefig('/pbs/home/l/lkarda/EMRI_compression/plots/tfm_1_months_83epochs_5000.png')
         plt.close()
 
 if __name__ == "__main__":
     module_path = '/pbs/home/l/lkarda/EMRI_compression/neural_nets/neural_net_class.py'  
     model_class_name = 'AE_net'
-    model_state_name = 'AE_net_30000_samples_1_months_8_1000_20240627_020501_37'
+    model_state_name = 'AE_net_30000_samples_1_months_8_5000_20240630_133536_83'
     input_folder = '100_samples_1_months/'
     plot_flag = 'tfm'
 

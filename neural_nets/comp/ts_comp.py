@@ -3,11 +3,8 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 
-from ltft.timeserie import Timeserie
-from ltft.tfmap import TimeFrequencyArray
 from helpers_comp import load_model, plot_colormap, mat_overlap, plot_graph
-from wavelet_trafo import wavelet_transform, inv_process_signal, process_signal, inverse_normalization, read_global_extremes, load_file, inv_wavelet_transform
-from ltft.common.utils import select_scale_df
+from wavelet_trafo import wavelet_transform, read_global_extremes, load_file, inv_wavelet_transform
 
 
 def main(model_class_name, model_state_name, input_file, output_plot, plot_flag):
@@ -41,6 +38,7 @@ def main(model_class_name, model_state_name, input_file, output_plot, plot_flag)
         # Plot input and output
         fig, axs = plt.subplots(2, 2, figsize=(12, 8))
         extents = [0.0, 3164160.0, 9.765625e-05, 0.05]  # Modify as needed
+
 
 
         plot_colormap(input_data_np[0], extents, axs[0, 0], 'Real Input')
@@ -80,10 +78,10 @@ def main(model_class_name, model_state_name, input_file, output_plot, plot_flag)
 
 if __name__ == "__main__":
     
-    model_class_name = 'AE_net'
-    model_state_name = 'AE_net_30000_samples_1_months_8_1000_20240627_020501_27'
+    model_class_name = 'AE_CNN_maxPool3_3'
+    model_state_name = 'AE_CNN_maxPool3_3_30000_samples_1_months_8_5000_20240711_140426_4'
     input_file = '100_samples_1_months/singles/18.npz'
-    output_plot = 'tfm_1_months_28epochs.png'
+    output_plot = 'tfm_comp_1_month_4epochs_AE_CNN_maxPool3_3.png'
     plot_flag = 'tfm' # 'tfm' or 'ts'
 
     main(model_class_name, model_state_name, input_file, output_plot, plot_flag)

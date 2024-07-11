@@ -21,14 +21,14 @@ def load_model(module_path, model_class_name, model_state_name, channel_mult, nu
     model_class = getattr(neural_net_module, model_class_name)
     model = model_class(
         channel_mult= channel_mult,
-        h_kernel= h_kernel,
-        w_kernel= w_kernel,
-        num_fc_nodes_after_conv= num_fc_nodes_after_conv,
-        num_fc_nodes_bottleneck= num_fc_nodes_bottleneck
+        # h_kernel= h_kernel,
+        # w_kernel= w_kernel,
+        # num_fc_nodes_after_conv= num_fc_nodes_after_conv,
+        # num_fc_nodes_bottleneck= num_fc_nodes_bottleneck
     )
     
     # Construct the full path to the model state
-    model_state_path = '/sps/lisaf/lkarda/model_states/res_states/' + model_state_name
+    model_state_path = '/sps/lisaf/lkarda/model_states/' + model_state_name
     
     model.load_state_dict(torch.load(model_state_path, map_location=torch.device('cuda')))
     model.eval()
@@ -53,7 +53,7 @@ def plot_graph(ts, dt, ax, title):
 
 def mat_overlap(a,b):
     nom= np.multiply(a,b).sum()
-    denom= np.linalg.norm(a) * np.linalg.norm(b)
+    denom= np.sqrt(np.sum(np.multiply(a,a)) * np.sum(np.multiply(b,b))) #np.linalg.norm(a) * np.linalg.norm(b)
     return nom/denom
 
 def load_tfm(input_file_path):

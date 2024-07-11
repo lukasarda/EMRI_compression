@@ -22,9 +22,9 @@ def plot_losses(training_losses, validation_losses):
     plt.xlabel('Epochs')
     plt.ylabel('Loss')
     plt.legend()
-    plt.savefig('/pbs/home/l/lkarda/EMRI_compression/neural_nets/loss/loss_AE_CNN_maxPool2_new_norm.png')
+    plt.savefig('/pbs/home/l/lkarda/EMRI_compression/neural_nets/loss/loss_AE_CNN_maxPool3_2.png')
 
 if __name__ == "__main__":
-    log_file_path = "/pbs/home/l/lkarda/EMRI_compression/serial_test_15917239.log"  # Replace with the actual path to your log file
+    log_file_path = "/pbs/home/l/lkarda/EMRI_compression/neural_nets/serial_test_18336761.log"
     training_losses, validation_losses = read_log_file(log_file_path)
     plot_losses(training_losses, validation_losses)

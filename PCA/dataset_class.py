@@ -1,10 +1,6 @@
-import torch
 import os
 import numpy as np
-
-from torch.utils.data import Dataset, ConcatDataset
-
-
+from torch.utils.data import Dataset
 
 class npz_class(Dataset):
 
@@ -17,9 +13,9 @@ class npz_class(Dataset):
     def __getitem__(self, idx):
         filepath= self.filepaths[idx]
 
-        with np.load(filepath) as ts:
-            real = ts[ts.files[0]].real
-            imag = ts[ts.files[0]].imag
+        with np.load(filepath) as tfm:
+            real = tfm[tfm.files[0]]
+            imag = tfm[tfm.files[1]]
 
         # Combine the arrays
         combi = np.array([real, imag])

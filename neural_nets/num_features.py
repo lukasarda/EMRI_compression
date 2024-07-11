@@ -2,20 +2,20 @@ import torch
 import pprint
 
 from calc_shape import calculate_output_shapes, extract_hyperparameters
-from neural_net_class import CL_maxPool
+from neural_net_class import CL_maxPool, AE_CNN_maxPool3_3
 
 def check_shapes(model):
     hyperparams = extract_hyperparameters(model(channel_mult=8))
     # Define initial shape
-    initial_shape = (512, 1030, 2)  # Example input shape (height, width, channels)
+    initial_shape = (512, 516, 2)  # Example input shape (height, width, channels)
     # Calculate and print output shapes
     output_shapes = calculate_output_shapes(initial_shape[0], initial_shape[1], initial_shape[2], hyperparams)
     pprint.pprint(output_shapes, sort_dicts=False)
 
-# check_shapes(CL_maxPool)
+# check_shapes(AE_CNN_maxPool3_3)
 
 def cn_enc_out_shape(channel_mult, input_shape):
-    hyperparams = extract_hyperparameters(CL_maxPool(channel_mult= channel_mult, h_kernel= 1, w_kernel= 1))
+    hyperparams = extract_hyperparameters(AE_CNN_maxPool3_3(channel_mult= channel_mult)) #, h_kernel= 1, w_kernel= 1))
     output_shapes = calculate_output_shapes(h_in= input_shape[0], w_in= input_shape[1], c_in= 2, hyperparams= hyperparams)
     
     encoder_entries = {k: v for k, v in output_shapes.items() if k.startswith('encoder')}
@@ -28,4 +28,4 @@ def cn_enc_out_shape(channel_mult, input_shape):
 
     return h_cn_enc_out, w_cn_enc_out, h_kernel, w_kernel
 
-# cn_enc_out_shape(8, (512,1030))
+# cn_enc_out_shape(8, (512,516))
